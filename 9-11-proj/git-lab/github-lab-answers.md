@@ -32,3 +32,9 @@
 
 #Why would you want to use a branch other than the default master?
 - In order to make changes to my repository or do development that I may not want to affect the master file.
+
+#Give an example for when you would use git merge and give an example for when it would be better to submit a pull request to have your branch merged
+- merge is used to combine two or more commits into a single commit using a common ancestor as a reference point for a branch
+
+#What command do you use to send all of the work that you've done locally to your remote repository?
+- git push remote <repository url>
