@@ -91,3 +91,11 @@
 // for (let i = 12; i <= 3999; i+=3) {
 //   console.log(i);
 // }
+
+
+
+// Print out the even numbers that are within the range of 1 - 100.
+// Adjust your code to add a message next to even numbers only that says: "<-- is an even number".
+// for (var i = 0; i <=100; i+=2) {
+//   console.log(i + ' <- is an even number');
+// }
