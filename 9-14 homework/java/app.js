@@ -68,10 +68,26 @@
 // Make a variable that will hold a person's age. Be semantic.
 // Write code that will print out "Here are the keys", if the age is 16 years or older.
 // If the age is younger than 16, a message should print "Sorry, you're too young."
+//
+// const age = 16
+// if (age>=16) {
+//   console.log('Here are the keys');
+// }else {
+//     console.log('Sorry youre too young');
+//   }
 
-const age = 16
-if (age>=16) {
-  console.log('Here are the keys');
-}else {
-    console.log('Sorry youre too young');
-  }
+
+// Write a loop that will print out all the numbers from 0 to 10, inclusive.
+// Write a loop that will print out all the numbers from 10 up to and including 400.
+// Write a loop that will print out every third number starting with 12 and going no higher than 4000.
+//
+// for (let i=0; i <= 10; i++) {
+//   console.log(i);
+// }
+//
+// for (let i = 10; i <= 400; i++) {
+// console.log(i);
+// }
+// for (let i = 12; i <= 3999; i+=3) {
+//   console.log(i);
+// }
