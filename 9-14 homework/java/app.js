@@ -30,21 +30,48 @@
 // console.log(secondVariable);
 // var yourName = 'Julian'
 // console.log('Hello, my name is ' + yourName);
+//
+// const a = 4;
+// const b = 53;
+// const c = 57;
+// const d = 16;
+// const e = 'Kevin';
+//
+//
+// console.log(a<b);
+// console.log(c>d);
+// console.log('Name'=='Name');
+// console.log(true!=false);
+// console.log(false + false + false + false + false + false != true);
+// console.log(false == false)
+// console.log(e == 'Kevin');
+// console.log(a + b == c);
+// console.log(a + a < d);
+// console.log(48 == '48');
 
-const a = 4;
-const b = 53;
-const c = 57;
-const d = 16;
-const e = 'Kevin';
+// Declare a variable animal. Set it to be either "cow" or something else.
+// Write code that will print out "mooooo" if the it is equal to cow.
+// Change your code so that if the variable animal is anything other than a cow, it will print "Hey! You're not a cow."
+// Commit.
+// var animal = 'cow';
+// const moo =  function moo(animal) {
+//   if (animal=='cow') {
+//
+//     console.log('moooo');
+//   }else {
+//       console.log('hey youre not a cow!');
+//     }
+// console.log(moo());
+//   }
 
 
-console.log(a<b);
-console.log(c>d);
-console.log('Name'=='Name');
-console.log(true!=false);
-console.log(false + false + false + false + false + false != true);
-console.log(false == false)
-console.log(e == 'Kevin');
-console.log(a + b == c);
-console.log(a + a < d);
-console.log(48 == '48');
+// Make a variable that will hold a person's age. Be semantic.
+// Write code that will print out "Here are the keys", if the age is 16 years or older.
+// If the age is younger than 16, a message should print "Sorry, you're too young."
+
+const age = 16
+if (age>=16) {
+  console.log('Here are the keys');
+}else {
+    console.log('Sorry youre too young');
+  }
