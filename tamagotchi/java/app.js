@@ -16,3 +16,13 @@
 // You pet should die if Hunger, Boredom, or Sleepiness hits 10.
 // Morph your pet at certain ages.
 // Animate your pet across the screen while it's alive.
+class tamagotchi {
+  constructor(height, width, hunger, sleepiness, boredom, age) {
+    this.height= 60,
+    this.width= 40,
+    this.hunger= 10,
+    this.sleepiness= 10,
+    this.boredom= 10,
+    this.age= age,
+  }
+}
