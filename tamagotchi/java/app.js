@@ -16,13 +16,43 @@
 // You pet should die if Hunger, Boredom, or Sleepiness hits 10.
 // Morph your pet at certain ages.
 // Animate your pet across the screen while it's alive.
-class tamagotchi {
-  constructor(height, width, hunger, sleepiness, boredom, age) {
-    this.height= 60,
-    this.width= 40,
-    this.hunger= 10,
-    this.sleepiness= 10,
-    this.boredom= 10,
-    this.age= age,
+
+var Tamagotchi = {
+  initial: function (name) {
+    this.name = name
+    this.age = 0
+    this.hunger = 10
+    this.sleepiness = 10
+    this.boredom = 10
+  },
+  passage: function () {
+    this.age = this.age + 1
+    this.hunger = this.hunger - 1
+    this.sleepiness = this.sleepiness - 1
+    this.boredom = this.boredom - 1
+  },
+  alive: function () {
+    if (this.hunger <= 0 || this.sleepiness <= 0 || this.boredom <= 0 || this.age === 100) {
+      return false
+    } else {
+      return true
+    }
+  },
+  feed: function () {
+    this.hunger = this.hunger + 1
+  },
+  sleep: function () {
+    this.sleepiness = this.sleepiness + 1
+  },
+  play: function () {
+    this.boredom = this.boredom + 1
   }
 }
+$('#feed').click(function () {
+  tamagotchi.feed()
+}
+// $('.feed').on('click', () => {
+// let $ageVal = $('#hunger').val()
+// $hungerVal-=2
+// $('#hunger').val($ageVal)
+// }

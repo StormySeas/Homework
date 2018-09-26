@@ -114,14 +114,14 @@
 // I found a 6. Three is a crowd
 // I found a 9. Three is a crowd
 // I found a 10. High five!
-
-for (let i = 0; i <=100; i++) {
-  if ( i%5 == 0) {
-    console.log(i+ ' high five!');
-  }else {
-    if (i%3 == 0) {
-      console.log(i + ' three is a crowd');
-    }
-  }
-
-}
+// 
+// for (let i = 0; i <=100; i++) {
+//   if ( i%5 == 0) {
+//     console.log(i+ ' high five!');
+//   }else {
+//     if (i%3 == 0) {
+//       console.log(i + ' three is a crowd');
+//     }
+//   }
+//
+// }
