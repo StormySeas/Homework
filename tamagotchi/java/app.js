@@ -38,15 +38,12 @@ class Tamagotchi {
     }
   }
 }
-
 let tamagotchi
-$(document).ready(function () {
-  $('#start').click(function () {
-    $('#start').hide()
-    tamagotchi = new Tamagotchi('')
-    tamagotchi.initial(prompt('Give it a name!'))
-    $('#name').text(tamagotchi.name)
-  })
+$('#start').click(function () {
+  $('#start').hide()
+  tamagotchi = new Tamagotchi('')
+  tamagotchi.initial(prompt('Give it a name!'))
+  $('#name').text(tamagotchi.name)
   let countdown = setInterval(function () {
     console.log(tamagotchi)
     tamagotchi.passage()
@@ -54,19 +51,18 @@ $(document).ready(function () {
     $('#sleepiness').val(tamagotchi.sleepiness)
     $('#boredom').val(tamagotchi.boredom)
     if (!tamagotchi.alive()) {
-      alert(tamagotchi.name + ' is dead!')
+      alert(tamagotchi.name + ' is super dead!')
       clearInterval(countdown)
       $('#start').show()
-      console.log(tamagotchi)
     }
   }, 1300)
-  $('#feed').click(function () {
-    $('#hunger').val(tamagotchi.hunger += 1)
-  })
-  $('#sleep').click(function () {
-    $('#sleepiness').val(tamagotchi.sleepiness += 1)
-  })
-  $('#play').click(function () {
-    $('#boredom').val(tamagotchi.boredom += 1)
-  })
+})
+$('#feed').click(function () {
+  $('#hunger').val(tamagotchi.hunger += 1)
+})
+$('#sleep').click(function () {
+  $('#sleepiness').val(tamagotchi.sleepiness += 1)
+})
+$('#play').click(function () {
+  $('#boredom').val(tamagotchi.boredom += 1)
 })

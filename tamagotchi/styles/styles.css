@@ -1,3 +1,23 @@
+html{
+  display: flex;
+  font-size: 18px;
+    max-width: 800px;
+    flex-wrap: nowrap;
+    align-content: center;
+    background-image: url(https://mbtskoudsalg.com/images/animal-face-png-3.png);
+}
 body {
-  display: inline-table;
+  display: flex;
+  align-content: center;
+}
+div {
+  display: flex;
+  height: auto;
+   width: auto;
+
+}
+table, th, td{
+  height: inherit;
+  display: grid;
+flex-direction: column;
 }
