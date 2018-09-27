@@ -45,6 +45,7 @@ $(document).ready(function () {
     $('#start').hide()
     tamagotchi = new Tamagotchi('')
     tamagotchi.initial(prompt('Give it a name!'))
+    $('#name').text(tamagotchi.name)
   })
   let countdown = setInterval(function () {
     console.log(tamagotchi)
@@ -53,7 +54,7 @@ $(document).ready(function () {
     $('#sleepiness').val(tamagotchi.sleepiness)
     $('#boredom').val(tamagotchi.boredom)
     if (!tamagotchi.alive()) {
-      alert(tamagotchi.name + 'is dead!')
+      alert(tamagotchi.name + ' is dead!')
       clearInterval(countdown)
       $('#start').show()
       console.log(tamagotchi)
@@ -69,20 +70,3 @@ $(document).ready(function () {
     $('#boredom').val(tamagotchi.boredom += 1)
   })
 })
-// }
-// feed () {
-//   this.hunger = this.hunger + 1
-// }
-// sleep () {
-//   this.sleepiness = this.sleepiness + 1
-// }
-// play () {
-//   this.boredom = this.boredom + 1
-// }
-// }
-
-// $('.feed').on('click', () => {
-// let $ageVal = $('#hunger').val()
-// $hungerVal-=2
-// $('#hunger').val($ageVal)
-// }
