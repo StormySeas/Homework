@@ -37,16 +37,8 @@ class Tamagotchi {
       return true
     }
   }
-  feed () {
-    this.hunger = this.hunger + 1
-  }
-  sleep () {
-    this.sleepiness = this.sleepiness + 1
-  }
-  play () {
-    this.boredom = this.boredom + 1
-  }
 }
+
 let tamagotchi
 $(document).ready(function () {
   $('#start').click(function () {
@@ -67,20 +59,27 @@ $(document).ready(function () {
       console.log(tamagotchi)
     }
   }, 1300)
-  $('#hunger').click(function () {
-    tamagotchi.feed()
-    $('#hunger').text(tamagotchi.hunger)
+  $('#feed').click(function () {
+    $('#hunger').val(tamagotchi.hunger += 1)
   })
-  $('#sleepiness').click(function () {
-    tamagotchi.sleep()
-    $('#sleepiness').text(tamagotchi.sleepiness)
+  $('#sleep').click(function () {
+    $('#sleepiness').val(tamagotchi.sleepiness += 1)
   })
-  $('#boredom').click(function () {
-    tamagotchi.play()
-    $('#boredom').text(tamagotchi.boredom)
+  $('#play').click(function () {
+    $('#boredom').val(tamagotchi.boredom += 1)
   })
 })
-
+// }
+// feed () {
+//   this.hunger = this.hunger + 1
+// }
+// sleep () {
+//   this.sleepiness = this.sleepiness + 1
+// }
+// play () {
+//   this.boredom = this.boredom + 1
+// }
+// }
 
 // $('.feed').on('click', () => {
 // let $ageVal = $('#hunger').val()
