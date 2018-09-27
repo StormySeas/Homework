@@ -16,41 +16,72 @@
 // You pet should die if Hunger, Boredom, or Sleepiness hits 10.
 // Morph your pet at certain ages.
 // Animate your pet across the screen while it's alive.
-
-var Tamagotchi = {
-  initial: function (name) {
+class Tamagotchi {
+  initial (name) {
     this.name = name
     this.age = 0
     this.hunger = 10
     this.sleepiness = 10
     this.boredom = 10
-  },
-  passage: function () {
+  }
+  passage () {
     this.age = this.age + 1
     this.hunger = this.hunger - 1
     this.sleepiness = this.sleepiness - 1
     this.boredom = this.boredom - 1
-  },
-  alive: function () {
+  }
+  alive () {
     if (this.hunger <= 0 || this.sleepiness <= 0 || this.boredom <= 0 || this.age === 100) {
       return false
     } else {
       return true
     }
-  },
-  feed: function () {
+  }
+  feed () {
     this.hunger = this.hunger + 1
-  },
-  sleep: function () {
+  }
+  sleep () {
     this.sleepiness = this.sleepiness + 1
-  },
-  play: function () {
+  }
+  play () {
     this.boredom = this.boredom + 1
   }
 }
-$('#feed').click(function () {
-  tamagotchi.feed()
-}
+let tamagotchi
+$(document).ready(function () {
+  $('#start').click(function () {
+    $('#start').hide()
+    let tamagotchi = new Tamagotchi('')
+    tamagotchi.initial(prompt('Give it a name!'))
+  })
+  let countdown = setInterval(function () {
+    console.log(tamagotchi)
+    tamagotchi.passage()
+    $('#hunger').val(tamagotchi.hunger)
+    $('#sleepiness').val(tamagotchi.sleepiness)
+    $('#boredom').val(tamagotchi.boredom)
+    if (!tamagotchi.alive) {
+      alert(tamagotchi.name + 'is dead!')
+      clearInterval(countdown)
+      $('#start').show()
+      console.log(tamagotchi)
+    }
+  }, 300)
+  $('#hunger').click(function () {
+    tamagotchi.feed()
+    $('#hunger').text(tamagotchi.hunger)
+  })
+  $('#sleepiness').click(function () {
+    tamagotchi.sleep()
+    $('#sleepiness').text(tamagotchi.sleepiness)
+  })
+  $('#boredom').click(function () {
+    tamagotchi.play()
+    $('#boredom').text(tamagotchi.boredom)
+  })
+})
+
+
 // $('.feed').on('click', () => {
 // let $ageVal = $('#hunger').val()
 // $hungerVal-=2
