@@ -1,0 +1,393 @@
+
+<!-- saved from url=(0097)https://therealmofcode.com/posts/2012/11/building-minesweeper-game-using-javascript-html-css.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Building a minesweeper game using Javascript, HTML and CSS | The realm of code</title>
+	
+	<meta name="description" content="Personal blog about coding and web technologies - Zeljko Minic">
+	<meta name="keywords" content="blog, coding, development, web, technology, IT, javascript, programming, games, minesweeper">
+	<meta name="author" content="Zeljko Minic">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="DocPad v6.78.4">
+	<link href="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/bootstrap.min.css"><link rel="stylesheet" href="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/bootstrap-theme.min.css"><link rel="stylesheet" href="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/prism.css"><link rel="stylesheet" href="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/style.css">
+<script type="text/javascript" async="" src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/embed.js"></script><link rel="preload" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.f3244a4acd28bc8a2a45c572f616dbdf.css"><link rel="preload" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.c11fe52243dba94195dd363cbd3310b9.js"><link rel="preload" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.20ff438196bd472ffc901aab4ecabd5b.js"><link rel="preload" as="script" href="https://disqus.com/next/config.js"><style type="text/css">
+:root .adsbox
+{ display: none !important; }
+:root *[jgaw3jz][hidden] { display: none !important; }</style></head>
+<body>
+
+	<div class="col-md-2 col-xs-0"></div>
+	<div class="col-md-8 col-xs-12">
+
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="https://therealmofcode.com/index.html">
+				<span>&lt;</span>
+				<span>
+					the<strong>realm</strong>of<strong>code</strong>
+				</span>
+				<span>/&gt;</span>
+			</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">	
+				
+					<li class="">
+						<a href="https://therealmofcode.com/index.html">
+							Home
+						</a>
+					</li>
+				
+					<li class="">
+						<a href="https://therealmofcode.com/about.html">
+							About
+						</a>
+					</li>
+				
+					<li class="">
+						<a href="https://therealmofcode.com/archive.html">
+							Archive
+						</a>
+					</li>
+				
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="https://twitter.com/zeljko_minic" target="_blank" title="Twitter">
+						<img src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/twitter.png">
+					</a>
+				</li>
+				<li>
+					<a href="http://rs.linkedin.com/in/zminic" target="_blank" title="LinkedIn">
+						<img src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/linkedin.png">
+					</a>
+				</li>
+			</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+		</nav>
+
+
+		<div class="content">
+			<div class="post">
+
+	<div class="title">
+		<h1>Building a minesweeper game using Javascript, HTML and CSS</h1>
+	</div>
+	
+	<div class="body">
+		<p>In the previous post I wrote about importance of having personal projects as part of "stretching your limits" strategy. In this post I'm following my own tips and do something totally different from my everyday work - build a game.</p>
+<p>Why minesweeper? I decided to build a minesweeper game because it's a nice old board game with easy to follow rules and its building shouldn't take too much time.</p>
+<p>You can play with the live demo below, or open <a href="https://therealmofcode.com/games/minesweeper/minesweeper.html" target="_blank">standalone demo</a> (suitable for all difficulty levels).</p>
+<iframe src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/minesweeper.html" width="100%" height="420px" seamless="true" border="0" scrolling="auto" frameborder="0"></iframe>
+
+<p>So, how to create a minesweeper? Let's first break down our goal to a few smaller tasks:</p>
+<ol>
+<li>Define  rules</li>
+<li>Structure game</li>
+<li>Draw the board<ol>
+<li>Draw fields</li>
+<li>Plant mines</li>
+<li>Calculate distances</li>
+</ol>
+</li>
+<li>Find a way to traverse the board</li>
+<li>Implement the "reveal" logic</li>
+</ol>
+<h2 id="defining-the-rules">Defining the rules</h2>
+<p>You can find complete rules with game description <a href="http://en.wikipedia.org/wiki/Minesweeper_(video_game">here</a>. I will write a short summary anyway if you are too lazy (like me) to read the whole article:</p>
+<ol>
+<li>Goal of the game is to find all mines on the board.</li>
+<li>You reveal mines by clicking at board field.</li>
+<li>If you reveal a field with mine you lose the game.</li>
+<li>If you reveal field without a mine it will show exact number of mines surrounding that field.</li>
+<li>If you reveal field without number it means that there are no mines in its surroundings. In that case board will reveal all connected empty fields with its surroundings.</li>
+<li>You can flag field by right-clicking it.</li>
+<li>If you click on a revealed field and you already flagged all mines around that field, board will reveal rest of the hidden fields. Of course, if you misplaced flags you will reveal a field with a mine and lose the game.</li>
+</ol>
+<h2 id="structuring-the-game">Structuring the game</h2>
+<p>It's very important to define game structure before we proceed with the coding. That way we will think through about all classes, they responsibilities and relations. You can see how I structured this game at the class diagram below:</p>
+<p><img src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/minesweeper-class-diagram.png"></p>
+<ul>
+<li>Field class represents single field on the board and provides all operations on a field that we need.</li>
+<li>Board class is responsible for drawing a board, planting mines, calculating mine distance, traversing the board and revealing fields.</li>
+<li>Game class is responsible for the gameplay (difficulty levels, timer, starting and stopping a game).</li>
+</ul>
+<p>After creating classes I needed to decide how to connect my classes with the DOM. I wanted to keep all nice and tidy so I used module pattern to prevent global namespace pollution and exported only jquery plugin which is used to initialize the game. With this design I gained another cool feature and that is game independence, meaning I can have multiple active games on the screen and each one will work fine.</p>
+<p>You can see below what this structure looks like in code editor:</p>
+<p><img src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/minesweeper-structure.png"></p>
+<p>For the class creation I will use "Functional Inheritance" pattern described in Douglas Crockford's book named "Javascript - The Good Parts".</p>
+<h2 id="game-markup">Game markup</h2>
+<p>Next I'm going to create HTML markup necessary for the game:</p>
+<pre class=" language-markup"><code class=" language-markup">    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>game<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>minesweeper<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>Your time:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timer<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>Level:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>level<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>option</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>easy<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Easy<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>option</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>option</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>beginner<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Beginner<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>option</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>option</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>intermediate<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Intermediate<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>option</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>option</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>advanced<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Advanced<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>option</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>newGame<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>New game<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>board<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>And finally to initialize the game I'm simply going to call jQuery plugin over this markup:</p>
+<pre class=" language-javascript"><code class=" language-javascript">    $<span class="token punctuation">(</span>document<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ready<span class="token punctuation">(</span></span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        $<span class="token punctuation">(</span><span class="token string">'#game'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">minesweeper<span class="token punctuation">(</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Ok now the fun stuff. We defined the structure and now we are ready to implement the game.</p>
+<h2 id="drawing-the-board">Drawing the board</h2>
+<p>I'm going to draw the board using series of div elements floated to left. To break a row I will add another div element with clear: left style.</p>
+<p>Also I'm going to create an in memory representation of the board using a matrix. It is easier and faster to traverse a matrix than the DOM. For this to work I must maintain the binding between in memory representation and the DOM, if one gets updated the other must update as well. I was tempted here to use knockoutjs library for the two-way binding, but for the sake of simplicity I decided to do it manually.</p>
+<p>To draw the board we need to do three things:</p>
+<ol>
+<li>Draw fields</li>
+<li>Plant mines</li>
+<li>Calculate distances</li>
+</ol>
+<p><em>drawing fields:</em></p>
+<pre class=" language-javascript"><code class=" language-javascript">    <span class="token keyword">function</span> <span class="token function">drawBoard<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> i<span class="token punctuation">,</span> j<span class="token punctuation">,</span> fieldElement<span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> dimension<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            boardData<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> dimension<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                fieldElement <span class="token operator">=</span> $<span class="token punctuation">(</span><span class="token string">'&lt;div class="field hidden" /&gt;'</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">appendTo<span class="token punctuation">(</span></span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                boardData<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">Field<span class="token punctuation">(</span></span>fieldElement<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                fieldElement<span class="token punctuation">.</span><span class="token function">data<span class="token punctuation">(</span></span><span class="token string">'location'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> x<span class="token punctuation">:</span> i<span class="token punctuation">,</span> y<span class="token punctuation">:</span> j <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            $<span class="token punctuation">(</span><span class="token string">'&lt;div class="clear" /&gt;'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">appendTo<span class="token punctuation">(</span></span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>In the code above you can notice a few things. First, I'm creating a matrix in class variable "boardData", then I'm appending a div element for the field to the board element. And finally I'm storing custom data in DOM element under name "location". This data will hold position of the field within boardData matrix.</p>
+<p><em>planting mines:</em></p>
+<pre class=" language-javascript"><code class=" language-javascript">    <span class="token keyword">function</span> <span class="token function">getRandomNumber<span class="token punctuation">(</span></span>max<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">floor<span class="token punctuation">(</span></span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random<span class="token punctuation">(</span></span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> max<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">plantMines<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> i<span class="token punctuation">,</span> minesPlanted <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>minesPlanted <span class="token operator">&lt;</span> mines<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            x <span class="token operator">=</span> <span class="token function">getRandomNumber<span class="token punctuation">(</span></span>dimension<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            y <span class="token operator">=</span> <span class="token function">getRandomNumber<span class="token punctuation">(</span></span>dimension<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>boardData<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token punctuation">.</span>isMine<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                boardData<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">setMine<span class="token punctuation">(</span></span><span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                minesPlanted<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>Planting mines is dead simple: find a random field in the matrix and call its setMine method, repeat operation until all mines are planted. SetMine method (I'll show it later) sets flag that current field is a mine and updates DOM element giving it a specific class for a mine.</p>
+<p><em>calculating distances:</em></p>
+<pre class=" language-javascript"><code class=" language-javascript">    <span class="token keyword">function</span> <span class="token function">calculateDistance<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> i<span class="token punctuation">,</span> j<span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> dimension<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> dimension<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">var</span> field <span class="token operator">=</span> boardData<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>field<span class="token punctuation">.</span>isMine<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">var</span> mines <span class="token operator">=</span> <span class="token function">traverseBoard<span class="token punctuation">(</span></span>field<span class="token punctuation">,</span> 
+                        <span class="token keyword">function</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token operator">!</span><span class="token operator">!</span>f<span class="token punctuation">.</span>isMine<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>mines<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        field<span class="token punctuation">.</span><span class="token function">setMineCount<span class="token punctuation">(</span></span>mines<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    <span class="token keyword">else</span>
+                    <span class="token punctuation">{</span>
+                        field<span class="token punctuation">.</span><span class="token function">setEmpty<span class="token punctuation">(</span></span><span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>Now it's time to fill the board with some numbers. Idea is to process every field which is not a mine, get its surrounding fields which are mines and update field text to number of mines surrounding that field. The trickiest part here is to find surrounding fields which are mines. For that job I made a function named "traverseBoard" which I will describe later in more detail.</p>
+<h2 id="traversing-the-board">Traversing the board</h2>
+<p>Board traversal function is the heart of minesweeper game. The goal of this function is to get all surrounding fields for observed field on the board and to apply filtering function over it. The function simply moves through the matrix in all directions and returns surrounding fields.</p>
+<pre class=" language-javascript"><code class=" language-javascript">    <span class="token keyword">function</span> <span class="token function">traverseBoard<span class="token punctuation">(</span></span>fromField<span class="token punctuation">,</span> condition<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+        condition <span class="token operator">=</span> condition <span class="token operator">||</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token keyword">true</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+       <span class="token comment" spellcheck="true"> // traverse up
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>x <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+       <span class="token comment" spellcheck="true"> // traverse down
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>x <span class="token operator">&lt;</span> dimension <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+       <span class="token comment" spellcheck="true"> // traverse left
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>y <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+       <span class="token comment" spellcheck="true"> // traverse right
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>y <span class="token operator">&lt;</span> dimension <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+       <span class="token comment" spellcheck="true"> // traverse upper left
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>x <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> fromField<span class="token punctuation">.</span>y <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+       <span class="token comment" spellcheck="true"> // traverse lower left
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>x <span class="token operator">&lt;</span> dimension <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> fromField<span class="token punctuation">.</span>y <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+       <span class="token comment" spellcheck="true"> // traverse upper right
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>x <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> fromField<span class="token punctuation">.</span>y <span class="token operator">&lt;</span> dimension <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+       <span class="token comment" spellcheck="true"> // traverse lower right
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>fromField<span class="token punctuation">.</span>x <span class="token operator">&lt;</span> dimension <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> fromField<span class="token punctuation">.</span>y <span class="token operator">&lt;</span> dimension <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            result<span class="token punctuation">.</span><span class="token function">push<span class="token punctuation">(</span></span>boardData<span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>fromField<span class="token punctuation">.</span>y <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> $<span class="token punctuation">.</span><span class="token function">grep<span class="token punctuation">(</span></span>result<span class="token punctuation">,</span> condition<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<h2 id="the-reveal-logic">The reveal logic</h2>
+<p>And finally the reveal logic, the function that executes when user clicks on a field. There are two modes for accessing this functions: manual and automatic. Manual mode is when reveal action is invoked as a result to user interaction, and automatic mode is when it's invoked automatically through recursion.</p>
+<p>The logic:</p>
+<ul>
+<li>If the field is flagged or already revealed then we do nothing.</li>
+<li>If the field is a mine then we trigger gameover event.</li>
+<li>If the field is already revealed and clicked by user then we check if all surrounding mines are already flagged, if yes then we reveal all hidden surrounding fields.</li>
+<li>And finally we handle situation when user clicked on the empty field (no mines in surrounding). In this situation we recursively reveal all empty fields in surrounding area.</li>
+</ul>
+<pre class=" language-javascript"><code class=" language-javascript">    obj<span class="token punctuation">.</span>reveal <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>field<span class="token punctuation">,</span> auto<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+       <span class="token comment" spellcheck="true"> // do not reveal flagged and revealed fields in auto mode
+</span>        <span class="token keyword">if</span> <span class="token punctuation">(</span>field<span class="token punctuation">.</span>isFlagged <span class="token operator">||</span> <span class="token punctuation">(</span>auto <span class="token operator">&amp;&amp;</span> field<span class="token punctuation">.</span>isRevealed<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>field<span class="token punctuation">.</span>isMine<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">revealBoard<span class="token punctuation">(</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            $<span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">trigger<span class="token punctuation">(</span></span><span class="token string">'gameover'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>field<span class="token punctuation">.</span>isRevealed <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>auto<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> flaggedMines <span class="token operator">=</span> <span class="token function">traverseBoard<span class="token punctuation">(</span></span>field<span class="token punctuation">,</span> 
+                <span class="token keyword">function</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> f<span class="token punctuation">.</span>isFlagged<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>field<span class="token punctuation">.</span>mineCount <span class="token operator">===</span> flaggedMines<span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">var</span> hiddenFields <span class="token operator">=</span> <span class="token function">traverseBoard<span class="token punctuation">(</span></span>field<span class="token punctuation">,</span> 
+                    <span class="token keyword">function</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token operator">!</span>f<span class="token punctuation">.</span>isRevealed <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>f<span class="token punctuation">.</span>isFlagged<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> hiddenFields<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    obj<span class="token punctuation">.</span><span class="token function">reveal<span class="token punctuation">(</span></span>hiddenFields<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            field<span class="token punctuation">.</span><span class="token function">setRevealed<span class="token punctuation">(</span></span><span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            field<span class="token punctuation">.</span><span class="token function">setFlagged<span class="token punctuation">(</span></span><span class="token keyword">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>field<span class="token punctuation">.</span>isEmpty<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">var</span> area <span class="token operator">=</span> <span class="token function">traverseBoard<span class="token punctuation">(</span></span>field<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> area<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>area<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>isEmpty <span class="token operator">||</span> <span class="token operator">!</span>area<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>isMine<span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        obj<span class="token punctuation">.</span><span class="token function">reveal<span class="token punctuation">(</span></span>area<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isGameOver<span class="token punctuation">(</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                $<span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">trigger<span class="token punctuation">(</span></span><span class="token string">'win'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>And that's it! I described only the main logic behind this game and left out a few helper functions and the gameplay but that's not very interesting anyway. I can upload the whole package if there is enough interest.</p>
+<p>So what do you think? Can you build a game? Why not challenge yourself and find out.</p>
+
+	</div>
+	
+	<div class="comments">
+		<div id="disqus_thread"><iframe id="dsq-app9446" name="dsq-app9446" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 980px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+		<script type="text/javascript">
+			/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+			var disqus_shortname = 'therealmofcode'; // required: replace example with your forum shortname
+
+			/* * * DON'T EDIT BELOW THIS LINE * * */
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+	</div>
+	
+</div>
+		</div>
+	</div>
+	<div class="col-md-2 col-xs-0"></div>
+	
+    <script defer="defer" src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/jquery.min.js"></script><script defer="defer" src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/bootstrap.min.js"></script><script defer="defer" src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/prism.js"></script><script defer="defer" src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/google-analytics.js"></script>
+
+<iframe style="display: none;" src="./Building a minesweeper game using Javascript, HTML and CSS _ The realm of code_files/saved_resource(1).html"></iframe></body></html>
